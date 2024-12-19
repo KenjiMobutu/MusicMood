@@ -36,6 +36,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'musicmatch.urls'
@@ -58,6 +60,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'musicmatch.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -76,7 +84,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vite dev server
+    "http://localhost:5000",  # Vite dev server
 ]
 
 # JWT settings
@@ -85,3 +93,16 @@ JWT_ALGORITHM = 'HS256'
 JWT_EXPIRATION_DELTA = timedelta(days=1)
 
 AUTH_USER_MODEL = 'users.User'
+# URI de connexion MongoDB
+MONGO_URI = "mongodb+srv://kenjimobutu:Genval1332@musicmatch.huj3c.mongodb.net/?retryWrites=true&w=majority"
+
+# Nom de la base de données
+MONGO_DB_NAME = "musicmatch"
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5000',  # Ajoutez cette ligne
+]
+
+CSRF_COOKIE_SECURE = False  # Pendant le développement, cela peut être défini sur False.
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_HTTPONLY = False

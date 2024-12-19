@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { AuthService } from '../services/auth.service'
 import { GENRES } from '../config/constants'
+import axios from 'axios';
+
 
 const router = useRouter()
 const username = ref('')
@@ -14,12 +16,33 @@ const favoriteArtists = ref('')
 const error = ref('')
 const loading = ref(false)
 
+
+// Obtenez le jeton CSRF depuis les cookies
+function getCsrfToken() {
+  const name = 'csrftoken';
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    const part = parts.pop();
+    if (part) {
+      const splitPart = part.split(';');
+      if (splitPart.length > 0) {
+        return splitPart.shift();
+      }
+    }
+  }
+  return null;
+}
+
+// Ajoutez le jeton CSRF dans les en-têtes d'Axios
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['X-CSRFToken'] = getCsrfToken() || '';
 async function handleSubmit() {
   if (password.value !== confirmPassword.value) {
     error.value = 'Passwords do not match'
     return
   }
-
+  axios.defaults.headers.common['X-CSRFToken'] = getCsrfToken() || '';
   loading.value = true
   error.value = ''
 
@@ -48,8 +71,9 @@ async function handleSubmit() {
           Create your account
         </h2>
       </div>
-      
+
       <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
+
         <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
           {{ error }}
         </div>

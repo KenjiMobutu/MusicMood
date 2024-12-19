@@ -52,7 +52,7 @@ export class AuthService {
       })
 
       if (!response.ok) throw new Error('Registration failed')
-
+      axios.defaults.withCredentials = true;  // Ajoutez cette ligne pour envoyer les cookies avec les requêtes
       const userData = await response.json()
       await this.login({
         email: data.email,

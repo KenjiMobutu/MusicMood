@@ -8,21 +8,25 @@ router = Router()
 
 @router.post("/register", response=UserResponse)
 def register(request, user_data: UserCreate):
-    user = User.objects.create(
-        username=user_data.username,
-        email=user_data.email,
-        password=get_password_hash(user_data.password),
-        favorite_genres=user_data.favorite_genres,
-        favorite_artists=user_data.favorite_artists
-    )
-    return user
+    try:
+        # Créez l'utilisateur
+        user = User.objects.create(
+            username=user_data.username,
+            email=user_data.email,
+            password=get_password_hash(user_data.password),
+            favorite_genres=user_data.favorite_genres,
+            favorite_artists=user_data.favorite_artists
+        )
+        return user
+    except Exception as e:
+        return {"error": str(e)}
 
 @router.post("/login", response=Token)
 def login(request, user_data: UserLogin):
     user = authenticate(email=user_data.email, password=user_data.password)
     if not user:
         return {"error": "Invalid credentials"}
-    
+
     access_token = create_access_token(data={"sub": user.email})
     return {"access_token": access_token}
 
