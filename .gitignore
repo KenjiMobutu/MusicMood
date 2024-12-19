@@ -26,3 +26,8 @@ dist-ssr
 # Environment variables
 .env
 .env.exemple
+# Ignorer les fichiers .env et .env.example dans les répertoires backend et frontend
+/backend/.env
+/backend/.env.example
+/frontend/.env
+/frontend/.env.example
