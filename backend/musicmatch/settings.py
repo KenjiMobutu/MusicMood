@@ -2,6 +2,8 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
+from pymongo import MongoClient
+from django.conf import settings
 
 load_dotenv()
 
@@ -22,6 +24,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'recommendations',
+    'musicmatch',
 ]
 
 MIDDLEWARE = [
@@ -55,15 +58,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'musicmatch.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': os.getenv('MONGODB_NAME', 'musicmatch'),
-        'CLIENT': {
-            'host': os.getenv('MONGODB_URI', 'mongodb://localhost:27017'),
-        }
-    }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -89,3 +83,5 @@ CORS_ALLOWED_ORIGINS = [
 JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'DQ8bb]Wft_VdO&J`$10Y|mA+2L0]^X')
 JWT_ALGORITHM = 'HS256'
 JWT_EXPIRATION_DELTA = timedelta(days=1)
+
+AUTH_USER_MODEL = 'users.User'

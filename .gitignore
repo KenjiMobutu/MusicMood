@@ -31,3 +31,6 @@ dist-ssr
 /backend/.env.example
 /frontend/.env
 /frontend/.env.example
+node_modules
+node_modules
+node_modules
