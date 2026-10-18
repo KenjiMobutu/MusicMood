@@ -26,6 +26,11 @@ dist-ssr
 # Environment variables
 .env
 .env.exemple
+
+# Local Python environments (recreate from the dependency manifests)
+venv/
+.venv/
+
 # Ignorer les fichiers .env et .env.example dans les répertoires backend et frontend
 /backend/.env
 /backend/.env.example

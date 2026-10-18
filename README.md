@@ -42,6 +42,8 @@ musicmatch/
    poetry run python manage.py migrate
    ```
 
+   Python virtual environments (`venv/` and `.venv/`) are local and are not tracked in Git. Recreate the environment with `poetry install`; dependencies are documented in `backend/pyproject.toml`, `backend/poetry.lock`, and `backend/requirements.txt`.
+
 4. Start development servers:
    ```bash
    # From project root
